@@ -332,9 +332,29 @@ def generate_skill_page(skill: dict, plugin: dict, enrichment: dict | None,
         lines.append(f"</div>")
         lines.append("")
 
+    # Argument hint from enrichment (frontmatter argument-hint)
+    argument_hint = enriched_skill.get("argument_hint") if enriched_skill else None
+
     # Arguments from enrichment
     if enriched_skill and enriched_skill.get("arguments"):
         lines.append("## Arguments")
+        lines.append("")
+        # Show invocation example: from argument_hint or auto-generated from args
+        hint = argument_hint
+        if not hint:
+            parts = []
+            for arg in enriched_skill["arguments"]:
+                name = arg["name"]
+                if name.startswith("--"):
+                    parts.append(f"[{name}]")
+                elif arg.get("required"):
+                    parts.append(f"<{name}>")
+                else:
+                    parts.append(f"[{name}]")
+            hint = " ".join(parts)
+        lines.append(f"```")
+        lines.append(f"/{sname} {hint}")
+        lines.append(f"```")
         lines.append("")
         lines.append("| Argument | Required | Default | Description |")
         lines.append("|----------|----------|---------|-------------|")
@@ -344,6 +364,28 @@ def generate_skill_page(skill: dict, plugin: dict, enrichment: dict | None,
             default = f'`{arg["default"]}`' if arg.get("default") else "—"
             adesc = arg.get("description", "")
             lines.append(f"| {aname} | {req} | {default} | {adesc} |")
+        lines.append("")
+    elif argument_hint:
+        # No enriched arguments but argument-hint exists — parse it as fallback
+        lines.append("## Arguments")
+        lines.append("")
+        lines.append(f"```")
+        lines.append(f"/{sname} {argument_hint}")
+        lines.append(f"```")
+        lines.append("")
+        lines.append("| Argument | Required | Description |")
+        lines.append("|----------|----------|-------------|")
+        for token in argument_hint.split():
+            if token.startswith("[") and token.endswith("]"):
+                name = token.strip("[]")
+                lines.append(f"| `{name}` | | Optional |")
+            elif token.startswith("<") and token.endswith(">"):
+                name = token.strip("<>")
+                lines.append(f"| `{name}` | :material-check: | |")
+            elif token.startswith("--"):
+                lines.append(f"| `{token}` | | Flag |")
+            else:
+                lines.append(f"| `{token}` | :material-check: | |")
         lines.append("")
 
     # Usage examples from enrichment
