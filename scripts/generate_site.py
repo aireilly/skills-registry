@@ -26,7 +26,7 @@ repo_name: opendatahub-io/skills-registry
 theme:
   name: material
   font:
-    text: JetBrains Mono
+    text: Google Sans Flex
     code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme: light)"
