@@ -401,8 +401,7 @@ what-if analysis, and near-miss identification).
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `input` | yes | The RFE to assess. Accepts multiple formats: a Jira issue key (e.g., RHAIRFE-1234), a file path to a document, a URL, raw pasted text, or a wildcard pattern (e.g., RHAIRFE-*) for bulk assessment of an entire Jira project.
- |
+| `input` | yes | The RFE to assess. Accepts multiple formats: a Jira issue key (e.g., RHAIRFE-1234), a file path to a document, a URL, raw pasted text, or a wildcard pattern (e.g., RHAIRFE-*) for bulk assessment of an entire Jira project. |
 
 Examples:
 ```
@@ -1954,5 +1953,19 @@ Examples:
 /meeting-risk-agenda
 Build a focused agenda from our team's weekly updates
 ```
+
+---
+
+## disconnected-readiness-scorer
+
+Score a repository's readiness for disconnected / air-gapped OpenShift deployments. Scans for image manifest completeness, digest enforcement, runtime egress, and Python dependency validation. Supports automatic detection of image management patterns (env var vs static CSV) and cross-references against the opendatahub-operator manifest.
+
+**Repository**: https://github.com/opendatahub-io/disconnected-readiness-scorer
+
+### Skills
+
+#### /disconnected-score
+
+Score a repository's readiness for disconnected / air-gapped OpenShift deployments
 
 ---

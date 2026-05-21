@@ -148,7 +148,7 @@ def generate_landing_page(registry: dict, cat_plugins: dict[str, list]) -> str:
         lines.append("")
         lines.append(f"    {desc}")
         lines.append("")
-        lines.append(f"    **{skill_count} skills** · {cat_name} · v{version}")
+        lines.append(f"    **{skill_count} skills** - {cat_name} - v{version}")
         lines.append("")
 
     lines.append("</div>")
@@ -162,7 +162,7 @@ def generate_landing_page(registry: dict, cat_plugins: dict[str, list]) -> str:
             continue
         count = len(cat_list)
         lines.append(f"- [{cat_meta['name']}](categories/{cat_key}.md) "
-                     f"— {cat_meta.get('description', '')} ({count} plugin{'s' if count != 1 else ''})")
+                     f"-- {cat_meta.get('description', '')} ({count} plugin{'s' if count != 1 else ''})")
     lines.append("")
 
     return "\n".join(lines)
@@ -353,26 +353,26 @@ def generate_skill_page(skill: dict, plugin: dict, enrichment: dict | None,
                 else:
                     parts.append(f"[{name}]")
             hint = " ".join(parts)
-        lines.append(f"```")
+        lines.append("```bash")
         lines.append(f"/{sname} {hint}")
-        lines.append(f"```")
+        lines.append("```")
         lines.append("")
         lines.append("| Argument | Required | Default | Description |")
         lines.append("|----------|----------|---------|-------------|")
         for arg in enriched_skill["arguments"]:
             aname = f'`{arg["name"]}`'
             req = ":material-check:" if arg.get("required") else ""
-            default = f'`{arg["default"]}`' if arg.get("default") else "—"
-            adesc = arg.get("description", "")
+            default = f'`{arg["default"]}`' if arg.get("default") else "-"
+            adesc = " ".join(arg.get("description", "").split())
             lines.append(f"| {aname} | {req} | {default} | {adesc} |")
         lines.append("")
     elif argument_hint:
         # No enriched arguments but argument-hint exists — parse it as fallback
         lines.append("## Arguments")
         lines.append("")
-        lines.append(f"```")
+        lines.append("```bash")
         lines.append(f"/{sname} {argument_hint}")
-        lines.append(f"```")
+        lines.append("```")
         lines.append("")
         lines.append("| Argument | Required | Description |")
         lines.append("|----------|----------|-------------|")
@@ -393,7 +393,7 @@ def generate_skill_page(skill: dict, plugin: dict, enrichment: dict | None,
     if enriched_skill and enriched_skill.get("usage_examples"):
         lines.append("## Usage")
         lines.append("")
-        lines.append("```")
+        lines.append("```bash")
         for ex in enriched_skill["usage_examples"]:
             lines.append(ex)
         lines.append("```")
@@ -407,7 +407,7 @@ def generate_skill_page(skill: dict, plugin: dict, enrichment: dict | None,
         # No arguments, no usage examples — show basic invocation
         lines.append("## Usage")
         lines.append("")
-        lines.append("```")
+        lines.append("```bash")
         lines.append(f"/{sname}")
         lines.append("```")
         lines.append("")
@@ -458,7 +458,7 @@ def generate_category_page(cat_key: str, cat_meta: dict,
             lines.append("")
             lines.append(desc)
             lines.append("")
-            lines.append(f"**{skill_count} skills** · v{version}")
+            lines.append(f"**{skill_count} skills** - v{version}")
             lines.append("")
 
     return "\n".join(lines)
@@ -602,7 +602,7 @@ def generate_llms_full_txt(registry: dict, docs_dir: Path) -> str:
                 for arg in args:
                     aname = arg.get("name", "")
                     req = "yes" if arg.get("required") else ""
-                    adesc = arg.get("description", "")
+                    adesc = " ".join(arg.get("description", "").split())
                     lines.append(f"| `{aname}` | {req} | {adesc} |")
                 lines.append("")
             if examples:
