@@ -101,6 +101,7 @@ def render_plugin(plugin: dict, registry_name: str) -> list[str]:
     repo = plugin["source"].get("repo", "")
     license_str = plugin.get("license", "")
     tags = plugin.get("tags", [])
+    scope = plugin.get("scope", "sdlc")
 
     lines.append(f"### {name}")
     lines.append("")
@@ -117,6 +118,10 @@ def render_plugin(plugin: dict, registry_name: str) -> list[str]:
     meta_parts = []
     if version:
         meta_parts.append(f"v{version}")
+    if scope == "generic":
+        meta_parts.append("Generic")
+    elif scope == "team":
+        meta_parts.append("Team-Specific")
     if license_str:
         meta_parts.append(license_str)
     if repo:

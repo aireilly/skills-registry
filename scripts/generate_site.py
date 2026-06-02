@@ -99,7 +99,7 @@ def build_category_plugins(registry: dict) -> dict[str, list]:
     categories = registry.get("categories", {})
     by_cat: dict[str, list] = {k: [] for k in categories}
     for plugin in registry.get("plugins", []):
-        if plugin.get("scope") == "team":
+        if scope_of(plugin) == "team":
             continue
         cat = plugin.get("category")
         if cat and cat in by_cat:
@@ -108,6 +108,14 @@ def build_category_plugins(registry: dict) -> dict[str, list]:
 
 
 SCOPE_BADGE = {"team": "Team-specific", "generic": "Generic"}
+VALID_SCOPES = {"sdlc", "generic", "team"}
+
+
+def scope_of(plugin: dict) -> str:
+    """Normalized scope. Unknown/missing values fall back to the sdlc default
+    so a plugin is never silently dropped from a scope-grouped section."""
+    scope = plugin.get("scope") or "sdlc"
+    return scope if scope in VALID_SCOPES else "sdlc"
 
 
 def generate_landing_page(registry: dict, cat_plugins: dict[str, list]) -> str:
@@ -164,9 +172,9 @@ def generate_landing_page(registry: dict, cat_plugins: dict[str, list]) -> str:
         lines.append("</div>")
         lines.append("")
 
-    sdlc_plugins = [p for p in plugins if p.get("scope", "sdlc") == "sdlc"]
-    generic_plugins = [p for p in plugins if p.get("scope") == "generic"]
-    team_plugins = [p for p in plugins if p.get("scope") == "team"]
+    sdlc_plugins = [p for p in plugins if scope_of(p) == "sdlc"]
+    generic_plugins = [p for p in plugins if scope_of(p) == "generic"]
+    team_plugins = [p for p in plugins if scope_of(p) == "team"]
 
     render_card_section("SDLC", sdlc_plugins)
     render_card_section("Generic", generic_plugins)
@@ -206,9 +214,9 @@ def generate_plugins_index(registry: dict) -> str:
 
     # Group into one section per scope: SDLC (default), Generic, Teams
     sections = [
-        ("SDLC", [p for p in plugins if p.get("scope", "sdlc") == "sdlc"]),
-        ("Generic", [p for p in plugins if p.get("scope") == "generic"]),
-        ("Teams", [p for p in plugins if p.get("scope") == "team"]),
+        ("SDLC", [p for p in plugins if scope_of(p) == "sdlc"]),
+        ("Generic", [p for p in plugins if scope_of(p) == "generic"]),
+        ("Teams", [p for p in plugins if scope_of(p) == "team"]),
     ]
     for title, group in sections:
         if not group:
@@ -254,7 +262,7 @@ def generate_plugin_page(plugin: dict, registry: dict, enrichment: dict | None,
     # Metadata
     lines.append('!!! info "Plugin Details"')
     lines.append("")
-    scope = plugin.get("scope", "sdlc")
+    scope = scope_of(plugin)
     meta = []
     if version:
         meta.append(f"    - **Version**: {version}")
@@ -497,8 +505,8 @@ def generate_category_page(cat_key: str, cat_meta: dict,
             lines.append("")
 
     # Split into SDLC and Generic subsections (team plugins aren't in categories)
-    sdlc_group = [p for p in plugins if p.get("scope", "sdlc") == "sdlc"]
-    generic_group = [p for p in plugins if p.get("scope") == "generic"]
+    sdlc_group = [p for p in plugins if scope_of(p) == "sdlc"]
+    generic_group = [p for p in plugins if scope_of(p) == "generic"]
     for title, group in (("SDLC", sdlc_group), ("Generic", generic_group)):
         if not group:
             continue
