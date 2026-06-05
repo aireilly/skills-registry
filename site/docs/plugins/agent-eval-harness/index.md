@@ -21,6 +21,11 @@ AskUserQuestion answering via 3-tier resolution (exact overrides, LLM with case
 context, fallback) and annotation-aware judges that adapt scoring based on
 expected outcomes per test case.
 
+Config auto-discovery (via discover.py) finds eval.yaml configs across
+nested and flat directory layouts, so skills no longer require an explicit
+--config path. A harness health-check skill (eval-check) scans all skills,
+commands, CLAUDE.md, and hooks for redundancy, overlap, and structural issues.
+
 The harness also integrates with EvalHub for running evaluations on Red Hat
 OpenShift AI via a custom provider adapter, supporting S3-hosted datasets and
 containerized execution.
@@ -52,6 +57,7 @@ containerized execution.
 | [`/eval-review`](eval-review.md) | Human-in-the-loop review of scores and outputs with qualitative feedback collection | :material-check: |
 | [`/eval-mlflow`](eval-mlflow.md) | Bidirectional MLflow sync for results, datasets, and feedback | :material-check: |
 | [`/eval-optimize`](eval-optimize.md) | Automated improvement loop that identifies failures, edits SKILL.md, and re-runs with regression checks | :material-check: |
+| [`/eval-check`](eval-check.md) | Full-harness configuration health check — scans skills, commands, CLAUDE.md, and hooks for redundancy, overlap, and structural issues | :material-check: |
 
 ## Installation
 
@@ -61,9 +67,10 @@ containerized execution.
 
 ## Architecture
 
-Seven skills form a linear pipeline with feedback loops: setup (optional) ->
+Eight skills form a linear pipeline with feedback loops: setup (optional) ->
 analyze -> dataset -> run -> review/optimize, with mlflow available at any
-point after run. eval-run is the central hub -- it executes skills headlessly,
+point after run. eval-check operates standalone as a cross-component health
+check. eval-run is the central hub -- it executes skills headlessly,
 runs judges (builtin + inline checks + LLM scoring + external modules, plus
 pairwise comparison against a baseline), and produces summary.yaml consumed by
 review, optimize, and mlflow. Builtin judges are reusable, versioned judges from

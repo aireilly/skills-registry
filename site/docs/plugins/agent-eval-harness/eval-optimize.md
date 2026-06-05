@@ -32,7 +32,7 @@ iterations reached.
 
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `--config` |  | `eval.yaml` | Path to eval config. |
+| `--config` |  | `auto-discover` | Path to eval config. |
 | `--model` |  | `models.skill from config` | Model for skill execution across all iterations. |
 | `--max-iterations` |  | `3` | Maximum optimization iterations before stopping. |
 | `--run-id` |  | `auto-generated` | Base run ID. Iterations append -iter-N. |

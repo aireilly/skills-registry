@@ -1442,6 +1442,11 @@ AskUserQuestion answering via 3-tier resolution (exact overrides, LLM with case
 context, fallback) and annotation-aware judges that adapt scoring based on
 expected outcomes per test case.
 
+Config auto-discovery (via discover.py) finds eval.yaml configs across
+nested and flat directory layouts, so skills no longer require an explicit
+--config path. A harness health-check skill (eval-check) scans all skills,
+commands, CLAUDE.md, and hooks for redundancy, overlap, and structural issues.
+
 The harness also integrates with EvalHub for running evaluations on Red Hat
 OpenShift AI via a custom provider adapter, supporting S3-hosted datasets and
 containerized execution.
@@ -1450,9 +1455,10 @@ containerized execution.
 
 ### Architecture
 
-Seven skills form a linear pipeline with feedback loops: setup (optional) ->
+Eight skills form a linear pipeline with feedback loops: setup (optional) ->
 analyze -> dataset -> run -> review/optimize, with mlflow available at any
-point after run. eval-run is the central hub -- it executes skills headlessly,
+point after run. eval-check operates standalone as a cross-component health
+check. eval-run is the central hub -- it executes skills headlessly,
 runs judges (builtin + inline checks + LLM scoring + external modules, plus
 pairwise comparison against a baseline), and produces summary.yaml consumed by
 review, optimize, and mlflow. Builtin judges are reusable, versioned judges from
@@ -1675,6 +1681,34 @@ Examples:
 /eval-optimize
 /eval-optimize --max-iterations 5 --model claude-opus-4-6
 /eval-optimize --target-judge completeness
+```
+
+#### /eval-check
+
+Full-harness configuration health check. Scans all skills, commands,
+CLAUDE.md, and hooks as a single system and produces an informational
+report with findings across five categories: content overlap (duplicated
+rules between skills), trigger overlap (descriptions that activate for the
+same tasks), CLAUDE.md duplication (rules already in CLAUDE.md that are
+restated in skills), type misclassification (skills that should be hooks,
+commands, or CLAUDE.md rules), and structural issues (missing descriptions,
+overly broad triggers). Read-only — does not modify any files. Skips
+cross-component analysis for single-skill projects.
+
+```
+/eval-check [--output <path>] [--include-global]
+```
+
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `--output` |  | Where to write the health check report. |
+| `--include-global` |  | Also scan ~/.claude/CLAUDE.md (user-global config). Opt-in for privacy. |
+
+Examples:
+```
+/eval-check
+/eval-check --include-global
+/eval-check --output eval/health-report.md
 ```
 
 ---

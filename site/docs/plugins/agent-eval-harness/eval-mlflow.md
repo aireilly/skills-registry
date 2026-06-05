@@ -33,7 +33,7 @@ MLFLOW_TRACKING_URI env var, then defaults to localhost:5000.
 |----------|----------|---------|-------------|
 | `--action` |  | `all` | Which sync action to perform. |
 | `--run-id` |  | - | Which eval run to log or attach feedback to. Required for log-results, push-feedback, and pull-feedback. |
-| `--config` |  | `eval.yaml` | Path to eval config. |
+| `--config` |  | `auto-discover` | Path to eval config. |
 
 ## Usage
 

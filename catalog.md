@@ -94,6 +94,7 @@ Tags: evaluation, testing, skills, agents, mlflow, optimization, scoring
 | `/eval-review` | Human-in-the-loop review of scores and outputs with qualitative feedback collection |
 | `/eval-mlflow` | Bidirectional MLflow sync for results, datasets, and feedback |
 | `/eval-optimize` | Automated improvement loop that identifies failures, edits SKILL.md, and re-runs with regression checks |
+| `/eval-check` | Full-harness configuration health check — scans skills, commands, CLAUDE.md, and hooks for redundancy, overlap, and structural issues |
 
 ```bash
 /plugin install agent-eval-harness@opendatahub-skills

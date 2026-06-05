@@ -31,7 +31,7 @@ AskUserQuestion, and creates annotations.yaml for outcome-aware judges.
 
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `--config` |  | `eval.yaml` | Path to eval config. |
+| `--config` |  | `auto-discover` | Path to eval config. |
 | `--count` |  | `5` | Number of test cases to generate. |
 | `--strategy` |  | `bootstrap` | Generation strategy. bootstrap: from scratch. expand: fill gaps in existing dataset. from-traces: extract from MLflow traces. |
 | `--run-id` |  | - | Previous eval run to learn from when filling coverage gaps (used with the expand strategy). |

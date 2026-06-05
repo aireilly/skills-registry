@@ -32,7 +32,7 @@ that judges cannot measure.
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `--run-id` | :material-check: | - | Which eval run to review. |
-| `--config` |  | `eval.yaml` | Path to eval config. |
+| `--config` |  | `auto-discover` | Path to eval config. |
 | `--cases` |  | - | Exact case directory names to review (space-separated). Defaults to all cases. |
 
 ## Usage

@@ -33,7 +33,7 @@ for AskUserQuestion and external APIs, and configurable reasoning effort levels.
 
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `--config` |  | `eval.yaml` | Path to eval config. |
+| `--config` |  | `auto-discover` | Path to eval config. |
 | `--model` |  | `models.skill from config` | Model for skill execution. Required if models.skill is unset in eval.yaml. |
 | `--subagent-model` |  | `models.subagent, falls back to skill model` | Model for subagents (e.g., claude-sonnet-4-6 while main is claude-opus-4-7). |
 | `--run-id` |  | `YYYY-MM-DD-<model>` | Identifier for this run. |

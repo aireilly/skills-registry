@@ -32,7 +32,7 @@ hash for staleness detection.
 | Argument | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `--skill` |  | `auto-detect` | Which skill to analyze. If omitted, lists all project skills and picks automatically if only one is found. |
-| `--config` |  | `eval.yaml` | Output path for the eval config file. |
+| `--config` |  | `auto-discover` | Output path for the eval config file. |
 | `--update` |  | `false` | Fill in missing sections only, preserving user edits. Useful for upgrading older configs. |
 
 ## Usage
