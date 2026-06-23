@@ -182,6 +182,58 @@ Tags: knowledge, context, claude-md, agents-md, pr-analysis, automation
 /plugin install knowledge-skills@opendatahub-skills
 ```
 
+### docs-skills
+
+Documentation review, writing, and workflow tools for AsciiDoc and Markdown documentation. Includes an orchestrated multi-step pipeline (requirements, planning, writing, review, quality gates), standalone review skills (style guide, technical, modular docs, security), codebase analysis for onboarding, JIRA and PR/MR integration, IBM Style Guide and Red Hat SSG sub-skills, and Google Docs conversion.
+
+v0.3.0 | Apache-2.0 | [opendatahub-io/docs-skills](https://github.com/opendatahub-io/docs-skills)
+
+Tags: documentation, asciidoc, mkdocs, workflow, review, style-guide, jira, onboarding, code-analysis
+
+| Skill | Description |
+|-------|-------------|
+| `/docs-orchestrator` | Documentation workflow orchestrator — reads step list from YAML, runs steps sequentially with progress tracking, iteration loops, and confirmation gates |
+| `/docs-workflow-start` | Interactive guided setup for the docs workflow with auto-resolved prerequisites and resume support |
+| `/learn-code` | Analyze a codebase for engineer onboarding — detects language, maps modules, analyzes in parallel, produces ONBOARDING.md |
+| `/query-code` | Query an analyzed codebase via the code-questioner agent |
+| `/understand-pull-request` | PR/MR impact analysis with module-level code understanding |
+| `/docs-review-style` | Multi-agent style guide and modular docs review with confidence scoring, PR/MR inline comment posting, and fix mode |
+| `/docs-review-technical` | Code-aware technical accuracy review of documentation |
+| `/docs-review-content-quality` | Content quality assessment for documentation |
+| `/docs-review-modular-docs` | Modular documentation structure compliance review |
+| `/docs-review-security` | Security and PII review for documentation content |
+| `/jira-reader` | Read and analyze JIRA issues — fetch details, search, extract comments, traverse ticket graphs, generate summaries |
+| `/jira-writer` | Create JIRA issues on Red Hat Issue Tracker |
+| `/git-pr-reader` | GitHub/GitLab PR/MR interaction and analysis |
+| `/article-extractor` | Extract web content for documentation reference |
+| `/docs-convert-gdoc-md` | Convert Google Docs to Markdown format |
+| `/redhat-docs-toc` | Generate Red Hat documentation table of contents |
+| `/action-comments` | Post review comments to PR/MR as inline annotations |
+| `/rn-known-issues` | Release notes known issues audit |
+| `/docs-redhat-case-search` | Search Red Hat support cases for documentation context |
+
+| Agent | Description |
+|-------|-------------|
+| docs-planner | Documentation architecture using JTBD framework |
+| docs-writer | Content creation for modular documentation modules |
+| docs-reviewer | Style and modular docs compliance review |
+| technical-reviewer | Technical accuracy review with code-aware validation |
+| repo-mapper | Codebase module detection and registry creation |
+| module-analyzer | Deep analysis of single codebase module |
+| relationship-analyzer | Cross-module coupling and dependency analysis |
+| synthesis-writer | Combines module analyses into ONBOARDING.md |
+| code-questioner | Answer questions about analyzed codebases |
+| requirements-discoverer | Lightweight JIRA/PR/spec requirement enumeration |
+| requirements-analyst | Deep per-requirement analysis with acceptance criteria |
+| requirement-classifier | Classify requirements by code evidence status |
+| pr-repo-summarizer | Quick repository overview for PR context |
+| pr-change-analyzer | Analyze PR changes against module registry |
+| pr-synthesis-writer | Combine PR data into PR-ANALYSIS.md |
+
+```bash
+/plugin install docs-skills@opendatahub-skills
+```
+
 ## DevOps & CI/CD
 
 Skills for deployment, CI/CD, and infrastructure
