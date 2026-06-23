@@ -19,6 +19,6 @@ Autonomous knowledge management skills for keeping AI context files (CLAUDE.md, 
 
 ### [docs-skills](../plugins/docs-skills/index.md)
 
-Documentation review, writing, and workflow tools for AsciiDoc and Markdown documentation. Includes an orchestrated multi-step pipeline (requirements, planning, writing, review, quality gates), standalone review skills (style guide, technical, modular docs, security), codebase analysis for onboarding, JIRA and PR/MR integration, IBM Style Guide and Red Hat SSG sub-skills, and Google Docs conversion.
+Documentation review, writing, and workflow tools for AsciiDoc and Markdown documentation. Includes an orchestrated multi-step pipeline, standalone review skills, codebase analysis for onboarding, and JIRA/PR integration.
 
-**49 skills** - v0.3.0
+**0 skills** - v0.3.0

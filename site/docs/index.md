@@ -10,7 +10,7 @@ hide:
 
 # Skills and plugins for AI-assisted software engineering workflows
 
-14 plugins | 124 skills | 7 categories
+14 plugins | 75 skills | 7 categories
 
 [Getting Started](getting-started.md){ .md-button .md-button--primary }
 
@@ -114,7 +114,7 @@ hide:
 
     Documentation review, writing, and workflow tools for AsciiDoc and Markdown documentation. Includes an orchestrated m...
 
-    **49 skills** - Documentation - v0.3.0
+    **0 skills** - Documentation - v0.3.0
 
 </div>
 
