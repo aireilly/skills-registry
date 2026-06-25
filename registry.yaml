@@ -667,3 +667,26 @@ plugins:
       package: spike-executor
       requires_python: ">=3.10"
     depends_on: []
+
+  - name: docs-skills
+    description: >
+      Documentation review, writing, and workflow tools for AsciiDoc and
+      Markdown documentation. Includes an orchestrated multi-step pipeline,
+      standalone review skills, codebase analysis for onboarding, and
+      JIRA/PR integration.
+    version: "0.3.0"
+    category: documentation
+    tags: [documentation, asciidoc, mkdocs, workflow, review, style-guide, jira, onboarding, code-analysis]
+    author:
+      name: opendatahub-io
+    license: Apache-2.0
+    source:
+      type: github
+      repo: opendatahub-io/docs-skills
+      ref: main
+    homepage: https://github.com/opendatahub-io/docs-skills
+    repository: https://github.com/opendatahub-io/docs-skills
+    harnesses:
+      claude-code:
+        install: "/plugin install docs-skills@opendatahub-skills"
+    depends_on: []
